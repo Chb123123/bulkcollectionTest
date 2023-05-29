@@ -6,15 +6,16 @@ const ExcelJS = require('exceljs');
 const axios = require('axios');
 const https = require('https');
 
-
+// 页号
 let num = 1
-// 文件夹名称
+// excel 文件的页号
 let fileNum = 1
+// 文件夹名称
 let fileNameNum = 0
 // 要写入的数据列表
-let errorUrl = `https://www.vipstation.com.hk/sc/bags/chanel?page=${num}`
 function main() {
-  requests(`https://www.vipstation.com.hk/sc/bags/chanel?page=${num}`, { encoding: 'utf8' }) // 请求路径
+  let errorUrl = `https://www.vipstation.com.hk/sc/bags/chanel?page=${num}`
+  requests(errorUrl, { encoding: 'utf8' }) // 请求路径
     .on('data', async function (chunk) {
       console.log(`当前为第${num}个页面`)
       let excelData = []
@@ -196,13 +197,3 @@ async function downloadImage(url, filePath) {
     throw new Error(`图片下载失败：${error.message}`);
   }
 }
-
-// 调用函数并传入图片 URL 和保存路径
-// downloadImage('https://img.vipstation.com.hk/images/itemimg/A01113CBLKSS.jpg', './image.jpg')
-//   .then(() => {
-//     console.log('图片下载完成！');
-//   })
-//   .catch((error) => {
-//     console.error(`图片下载失败：${error.message}`);
-//   });
-
