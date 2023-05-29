@@ -6,6 +6,8 @@ const ExcelJS = require('exceljs');
 const axios = require('axios');
 const https = require('https');
 
+
+console.log('脚本即将开始')
 // 页号
 let num = 1
 // excel 文件的页号
