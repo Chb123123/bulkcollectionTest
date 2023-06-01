@@ -14,8 +14,8 @@ let fileNum = 1
 let fileNameNum = 0
 // 要写入的数据列表
 function main() {
-  let errorUrl = `https://www.vipstation.com.hk/jp/bags/ysl-saint-laurent?page${num}`
-  requests(`https://www.vipstation.com.hk/jp/bags/ysl-saint-laurent?page${num}`, { encoding: 'utf8' }) // 请求路径
+  let errorUrl = `https://www.vipstation.com.hk/jp/bags/prada?page=${num}`
+  requests(errorUrl, { encoding: 'utf8' }) // 请求路径
     .on('data', async function (chunk) {
       console.log(`当前为第${num}个页面`)
       let excelData = []
@@ -41,7 +41,7 @@ function main() {
         requests(`https://www.vipstation.com.hk/jp/item/${viewList[i]}.html`).on('data', async function (data) {
           let arr1 = []
           let imgUrl = data.split('var imgList')[1].split('var videoList')[0].split('"')
-          // // 图片名称
+          // 图片名称
           for (let item of imgUrl) {
             if (item.indexOf('https') !== -1) {
               arr1.push(item)
