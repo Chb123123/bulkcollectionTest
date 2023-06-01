@@ -14,8 +14,8 @@ let fileNum = 1
 let fileNameNum = 0
 // 要写入的数据列表
 function main() {
-  let errorUrl = `https://www.vipstation.com.hk/sc/bags/ysl-saint-laurent?page=${num}`
-  requests(errorUrl, { encoding: 'utf8' }) // 请求路径
+  let errorUrl = `https://www.vipstation.com.hk/jp/bags/ysl-saint-laurent?page${num}`
+  requests(`https://www.vipstation.com.hk/jp/bags/ysl-saint-laurent?page${num}`, { encoding: 'utf8' }) // 请求路径
     .on('data', async function (chunk) {
       console.log(`当前为第${num}个页面`)
       let excelData = []
@@ -38,7 +38,7 @@ function main() {
         if (!viewList[i]) {
           break
         }
-        requests(`https://www.vipstation.com.hk/sc/item/${viewList[i]}.html`).on('data', async function (data) {
+        requests(`https://www.vipstation.com.hk/jp/item/${viewList[i]}.html`).on('data', async function (data) {
           let arr1 = []
           let imgUrl = data.split('var imgList')[1].split('var videoList')[0].split('"')
           // // 图片名称
@@ -52,7 +52,7 @@ function main() {
           // 截取图片数据
           let addData = ["", "", "", "", "", "", "", "", "", "", "", ""]
           // console.log(list.split('"ST_CODE":')[1].split(',')[0].replace(/"/g, ''))
-          addData[0] = list.split('"ST_NAME":')[1].split(',')[0].replace(/"/g, '')
+          addData[0] = data.split('<title>')[1].split('</title>')[0].replace(/"/g, '')
           addData[1] = ''
           addData[2] = ''
           addData[3] = fileNum
@@ -72,7 +72,7 @@ function main() {
           addData[9] = ''
           addData[10] = ''
           addData[11] = ''
-          console.log('数据接收完成，开始下一条数据')
+          console.log(`第${fileNum}条数据获取完成，开始下一条数据`)
           excelData.push(addData)
           fileNum++
         })
@@ -148,9 +148,14 @@ function main() {
           }
         }
       }
-      console.log(`页号：${num} 爬取完成，开始下一个页面`)
-      num++
-      main()
+      if (viewList.length < 20) {
+        console.log('页面爬取完成，停止脚本')
+        return
+      } else {
+        console.log(`页号：${num} 爬取完成，开始下一个页面`)
+        num++
+        main()
+      }
     })
 }
 function sleep(ms) {
@@ -163,10 +168,10 @@ function checkFileExists(filePath) {
     // 使用 fs.accessSync 方法检查文件是否存在
     fs.accessSync(filePath, fs.constants.F_OK);
     console.log(`文件 ${filePath} 存在`);
-    console.log(`创建${filePath}文件`)
     return true;
   } catch (err) {
     console.error(`文件 ${filePath} 不存在`);
+    console.log(`创建${filePath}文件`)
     return false;
   }
 }
