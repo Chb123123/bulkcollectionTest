@@ -34,7 +34,7 @@ function main() {
         }
       }
       for (let i = 0; i <= viewList.length; i++) {
-        await sleep(1500)
+        await sleep(2000)
         if (!viewList[i]) {
           break
         }
@@ -115,7 +115,7 @@ function main() {
       console.log('当前页面爬取数据完成')
       console.log('开始爬取图片')
       for (let i = 0; i <= imgUrlList.length; i++) {
-        await sleep(1000)
+        await sleep(2000)
         if (!imgUrlList[i]) {
           break
         }
@@ -129,7 +129,7 @@ function main() {
           console.log(`文件夹 ${folderPath} 已存在`);
         }
         for (let j = 1; j <= imgUrlList[i].length; j++) {
-          await sleep(1500)
+          await sleep(2000)
           if (!imgUrlList[i][j]) {
             break
           }
